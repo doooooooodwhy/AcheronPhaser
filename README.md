@@ -1,19 +1,38 @@
-# 🔴 Acheron Phaser - Holy Unblocker Style
+ 🔴 ACHERON PHASER ULTIMATE
 
-A sophisticated web proxy inspired by Holy Unblocker's design, featuring a clean dark theme with red accents.
+**The most advanced web proxy system with Holy Unblocker LTS technology**
 
-## Features
+## 🌟 Features (Holy Unblocker Style)
 
-- 🎨 **Holy Unblocker inspired design** - Clean, professional interface
-- 🔒 **Secure proxy browsing** - Access any website safely
-- ⚡ **Fast performance** - Optimized for speed
-- 📱 **Mobile responsive** - Works on all devices
-- 🌙 **Dark theme** - Easy on the eyes
-- ⭐ **Bookmark system** - Save your favorite sites
-- ⌨️ **Keyboard shortcuts** - Ctrl+L, F5, F11, etc.
+### Core Proxies
+- **🔮 Ultraviolet** - Advanced service worker proxy with CAPTCHA support
+- **🚀 Scramjet** - Latest generation with fingerprint resistance
+- **🐏 Rammerhead** - Session-based with cookie/storage isolation
+- **⚡ Epoxy** - High-speed Wisp protocol transport
 
-## Quick Start
+### Advanced Features
+- **🛡️ Leak Prevention** - DNS, WebRTC, IP leak protection
+- **🚫 Ad Blocking** - Built-in ad blocking across all sites
+- **🔒 URL Encoding** - Advanced URL obfuscation
+- **🧅 Tor Integration** - Browse onion sites in any browser
+- **🎮 Game Library** - Built-in game emulation support
+- **🎵 Media Support** - Full YouTube, Spotify, streaming support
 
-1. **Install dependencies:**
+### Security Features
+- **SOCKS5 Proxy Support**
+- **Transport Mode Selection**
+- **Resource Compression**
+- **Low Latency Mode**
+- **Session Isolation**
+
+## 🚀 Quick Start
+
 ```bash
+# Install dependencies
 npm install
+
+# Start the server
+npm start
+
+# Access the proxy
+http://localhost:3000
