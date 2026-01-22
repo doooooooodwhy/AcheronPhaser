@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "name": "acheron-phaser",
+  "builds": [
+    {
+      "src": "src/server/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "src/client/static/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/src/client/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/src/server/index.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
