@@ -3,165 +3,1086 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acheron Phaser 2.0 - Advanced Browser Proxy</title>
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔴</text></svg>">
+    <title>Acheron Phaser - Advanced Web Proxy</title>
+    <style>
+        /* Holy Unblocker inspired theme with Acheron Phaser colors */
+        :root {
+            --primary-red: #FF6B6B;
+            --deep-red: #E55555;
+            --dark-bg: #0F0F0F;
+            --darker-bg: #0A0A0A;
+            --card-bg: #1A1A1A;
+            --border-color: #2A2A2A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --accent-color: #FF6B6B;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header - Holy Unblocker style */
+        .header {
+            background: var(--darker-bg);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-red);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-text h1 {
+            color: var(--text-primary);
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .logo-text p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-header {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-header:hover {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
+        }
+
+        /* Proxy Card - Holy Unblocker style */
+        .proxy-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .proxy-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .proxy-title h2 {
+            color: var(--text-primary);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .proxy-title p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        /* URL Input - Holy Unblocker style */
+        .url-input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 16px 20px;
+            background: var(--darker-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .btn-go {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 100px;
+        }
+
+        .btn-go:hover {
+            background: var(--deep-red);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Quick Links */
+        .quick-links {
+            margin-bottom: 30px;
+        }
+
+        .quick-links h3 {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quick-item {
+            background: var(--darker-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .quick-item:hover {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.2);
+        }
+
+        .quick-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .quick-name {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Features Section */
+        .features {
+            margin-top: 40px;
+        }
+
+        .features h3 {
+            color: var(--text-secondary);
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--primary-red);
+        }
+
+        .feature-title {
+            color: var(--text-primary);
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Browser Window */
+        .browser-window {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .browser-window.active {
+            display: block;
+        }
+
+        .browser-header {
+            background: var(--darker-bg);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .browser-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .browser-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .browser-btn:hover:not(:disabled) {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+        }
+
+        .browser-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .browser-address {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0 12px;
+            height: 36px;
+        }
+
+        .ssl-icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .address-input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            outline: none;
+            font-size: 14px;
+        }
+
+        .browser-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .browser-content {
+            height: 600px;
+            position: relative;
+            background: var(--white);
+        }
+
+        .browser-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+
+        .browser-frame.active {
+            display: block;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .loading-url {
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            background: var(--darker-bg);
+            padding: 10px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .status-left, .status-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker-bg);
+            padding: 30px 0;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-red);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .url-input-group {
+                flex-direction: column;
+            }
+
+            .browser-content {
+                height: 500px;
+            }
+
+            .quick-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <div class="logo">
-                <h1>🔴 Acheron Phaser 2.0</h1>
-                <p>Advanced Browser Proxy</p>
-            </div>
-            <div class="header-controls">
-                <button id="themeToggle" class="btn-icon">🌙</button>
-                <button id="fullscreenToggle" class="btn-icon">⛶</button>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🔴</div>
+                    <div class="logo-text">
+                        <h1>Acheron Phaser</h1>
+                        <p>Advanced Web Proxy</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-header" onclick="toggleTheme()">🌙 Theme</button>
+                    <button class="btn-header" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+                    <button class="btn-header" onclick="showSettings()">⚙️ Settings</button>
+                </div>
             </div>
         </header>
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Search Section -->
-            <section class="search-section">
-                <div class="search-container">
-                    <select id="searchEngine" class="search-dropdown">
-                        <option value="google">🔍 Google</option>
-                        <option value="duckduckgo">🦆 DuckDuckGo</option>
-                        <option value="bing">🅱️ Bing</option>
-                        <option value="yahoo">🌐 Yahoo</option>
-                        <option value="brave">🦁 Brave</option>
-                        <option value="ecosia">🌳 Ecosia</option>
-                    </select>
-                    <div class="search-input-group">
-                        <input 
-                            type="text" 
-                            id="searchInput" 
-                            placeholder="Search the web or enter URL..."
-                            class="search-input"
-                        >
-                        <button id="searchButton" class="btn-search">🚀</button>
+            <!-- Proxy Card -->
+            <div class="proxy-card">
+                <div class="proxy-title">
+                    <h2>Access Any Website</h2>
+                    <p>Secure, fast, and reliable web proxy</p>
+                </div>
+
+                <!-- URL Input -->
+                <div class="url-input-group">
+                    <input 
+                        type="text" 
+                        id="urlInput" 
+                        class="url-input" 
+                        placeholder="Enter URL or search term..."
+                        autocomplete="off"
+                    >
+                    <button class="btn-go" onclick="handleProxy()">Go</button>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="quick-links">
+                    <h3>Quick Access</h3>
+                    <div class="quick-grid">
+                        <a href="#" class="quick-item" onclick="quickAccess('https://github.com')">
+                            <span class="quick-icon">🐙</span>
+                            <span class="quick-name">GitHub</span>
+                        </a>
+                        <a href="#" class="quick-item" onclick="quickAccess('https://youtube.com')">
+                            <span class="quick-icon">📺</span>
+                            <span class="quick-name">YouTube</span>
+                        </a>
+                        <a href="#" class="quick-item" onclick="quickAccess('https://discord.com')">
+                            <span class="quick-icon">💬</span>
+                            <span class="quick-name">Discord</span>
+                        </a>
+                        <a href="#" class="quick-item" onclick="quickAccess('https://reddit.com')">
+                            <span class="quick-icon">🤖</span>
+                            <span class="quick-name">Reddit</span>
+                        </a>
+                        <a href="#" class="quick-item" onclick="quickAccess('https://twitter.com')">
+                            <span class="quick-icon">🐦</span>
+                            <span class="quick-name">Twitter</span>
+                        </a>
+                        <a href="#" class="quick-item" onclick="quickAccess('https://spotify.com')">
+                            <span class="quick-icon">🎵</span>
+                            <span class="quick-name">Spotify</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="features">
+                    <h3>Features</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🔒</div>
+                            <div class="feature-title">Secure Browsing</div>
+                            <div class="feature-desc">Encrypted connections and privacy protection</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <div class="feature-title">Fast Performance</div>
+                            <div class="feature-desc">Optimized for speed and reliability</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎨</div>
+                            <div class="feature-title">Modern Design</div>
+                            <div class="feature-desc">Clean and intuitive interface</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📱</div>
+                            <div class="feature-title">Mobile Friendly</div>
+                            <div class="feature-desc">Works perfectly on all devices</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browser Window -->
+            <div id="browserWindow" class="browser-window">
+                <div class="browser-header">
+                    <div class="browser-nav">
+                        <button class="browser-btn" onclick="goBack()" id="backBtn" disabled>←</button>
+                        <button class="browser-btn" onclick="goForward()" id="forwardBtn" disabled>→</button>
+                        <button class="browser-btn" onclick="reloadPage()">⟳</button>
+                    </div>
+                    <div class="browser-address">
+                        <span class="ssl-icon">🔒</span>
+                        <input type="text" id="addressBar" class="address-input" placeholder="Enter URL...">
+                    </div>
+                    <div class="browser-actions">
+                        <button class="browser-btn" onclick="toggleBookmark()">⭐</button>
+                        <button class="browser-btn" onclick="closeBrowser()">✕</button>
                     </div>
                 </div>
                 
-                <!-- Quick Actions -->
-                <div class="quick-actions">
-                    <button class="btn-quick" data-url="https://github.com">🐙 GitHub</button>
-                    <button class="btn-quick" data-url="https://youtube.com">📺 YouTube</button>
-                    <button class="btn-quick" data-url="https://reddit.com">🤖 Reddit</button>
-                    <button class="btn-quick" data-url="https://discord.com">💬 Discord</button>
-                    <button class="btn-quick" data-url="https://twitter.com">🐦 Twitter</button>
-                </div>
-            </section>
-
-            <!-- Browser Window -->
-            <section class="browser-section">
-                <div class="browser-window">
-                    <!-- Browser Controls -->
-                    <div class="browser-controls">
-                        <div class="browser-nav">
-                            <button id="backButton" class="btn-nav" disabled>←</button>
-                            <button id="forwardButton" class="btn-nav" disabled>→</button>
-                            <button id="reloadButton" class="btn-nav">🔄</button>
-                            <button id="homeButton" class="btn-nav">🏠</button>
-                        </div>
-                        <div class="browser-address">
-                            <div class="address-bar">
-                                <span id="sslIcon">🔒</span>
-                                <input type="text" id="addressInput" placeholder="Enter URL...">
-                                <button id="goAddressButton" class="btn-go">→</button>
-                            </div>
-                        </div>
-                        <div class="browser-actions">
-                            <button id="bookmarkButton" class="btn-action">⭐</button>
-                            <button id="menuButton" class="btn-action">☰</button>
-                        </div>
-                    </div>
-
-                    <!-- Loading Bar -->
-                    <div class="loading-bar" id="loadingBar">
-                        <div class="loading-progress"></div>
-                    </div>
-
-                    <!-- Browser Content -->
-                    <div class="browser-content">
-                        <iframe 
-                            id="browserFrame" 
-                            src="about:blank" 
-                            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                            allowfullscreen
-                        ></iframe>
-                        
-                        <!-- Welcome Screen -->
-                        <div id="welcomeScreen" class="welcome-screen">
-                            <div class="welcome-content">
-                                <h2>Welcome to Acheron Phaser 2.0</h2>
-                                <p>Your secure, private browser proxy</p>
-                                <div class="welcome-features">
-                                    <div class="feature">
-                                        <span class="feature-icon">🔒</span>
-                                        <span>Secure Browsing</span>
-                                    </div>
-                                    <div class="feature">
-                                        <span class="feature-icon">⚡</span>
-                                        <span>Fast Loading</span>
-                                    </div>
-                                    <div class="feature">
-                                        <span class="feature-icon">🎨</span>
-                                        <span>Custom Themes</span>
-                                    </div>
-                                </div>
-                                <div class="welcome-tips">
-                                    <p>💡 <strong>Tips:</strong></p>
-                                    <ul>
-                                        <li>Use the search bar to search or enter URLs</li>
-                                        <li>Switch search engines with the dropdown</li>
-                                        <li>Press F11 for fullscreen mode</li>
-                                        <li>Ctrl+L to focus address bar</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Error Screen -->
-                        <div id="errorScreen" class="error-screen" style="display: none;">
-                            <div class="error-content">
-                                <div class="error-icon">❌</div>
-                                <h3 id="errorTitle">Connection Error</h3>
-                                <p id="errorMessage">Unable to load this page</p>
-                                <button id="retryButton" class="btn-retry">Try Again</button>
-                            </div>
-                        </div>
+                <div class="browser-content">
+                    <iframe id="proxyFrame" class="browser-frame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+                    
+                    <!-- Loading Screen -->
+                    <div id="loadingScreen" class="loading-screen">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Loading...</div>
+                        <div id="loadingUrl" class="loading-url"></div>
                     </div>
                 </div>
-            </section>
+                
+                <div class="status-bar">
+                    <div class="status-left">
+                        <span id="statusText">Ready</span>
+                    </div>
+                    <div class="status-right">
+                        <span id="loadTime">--</span>
+                        <span id="connectionStatus">🟢 Connected</span>
+                    </div>
+                </div>
+            </div>
         </main>
 
-        <!-- Status Bar -->
-        <footer class="status-bar">
-            <div class="status-left">
-                <span id="statusText">Ready</span>
-            </div>
-            <div class="status-right">
-                <span id="loadTime">--</span>
-                <span id="connectionStatus">🟢 Connected</span>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#about">About</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#privacy">Privacy</a>
+                    <a href="#terms">Terms</a>
+                    <a href="#contact">Contact</a>
+                    <a href="https://github.com/acheron-phaser" target="_blank">GitHub</a>
+                </div>
+                <div class="footer-text">
+                    © 2024 Acheron Phaser | Advanced Web Proxy | Built with ❤️ for privacy and freedom
+                </div>
             </div>
         </footer>
     </div>
 
-    <!-- Context Menu -->
-    <div id="contextMenu" class="context-menu" style="display: none;">
-        <div class="context-item" data-action="back">← Back</div>
-        <div class="context-item" data-action="forward">→ Forward</div>
-        <div class="context-item" data-action="reload">🔄 Reload</div>
-        <hr>
-        <div class="context-item" data-action="bookmark">⭐ Bookmark</div>
-        <div class="context-item" data-action="fullscreen">⛶ Fullscreen</div>
-    </div>
+    <script>
+        // Acheron Phaser JavaScript - Holy Unblocker style functionality
+        class AcheronPhaser {
+            constructor() {
+                this.currentUrl = '';
+                this.history = [];
+                this.historyIndex = -1;
+                this.isLoading = false;
+                this.startTime = 0;
+                this.init();
+            }
 
-    <script src="static/js/search.js"></script>
-    <script src="static/js/browser.js"></script>
-    <script src="static/js/main.js"></script>
+            init() {
+                this.setupEventListeners();
+                this.loadFromStorage();
+                console.log('🔴 Acheron Phaser initialized');
+            }
+
+            setupEventListeners() {
+                // URL input
+                const urlInput = document.getElementById('urlInput');
+                urlInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.handleProxy();
+                    }
+                });
+
+                // Address bar
+                const addressBar = document.getElementById('addressBar');
+                addressBar.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.loadUrl(addressBar.value);
+                    }
+                });
+
+                // Frame events
+                const frame = document.getElementById('proxyFrame');
+                frame.addEventListener('load', () => this.handleFrameLoad());
+                frame.addEventListener('error', () => this.handleFrameError());
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey && e.key === 'l') {
+                        e.preventDefault();
+                        document.getElementById('urlInput').focus();
+                    }
+                    if (e.key === 'F5') {
+                        e.preventDefault();
+                        this.reloadPage();
+                    }
+                    if (e.key === 'F11') {
+                        e.preventDefault();
+                        this.toggleFullscreen();
+                    }
+                });
+            }
+
+            handleProxy() {
+                const input = document.getElementById('urlInput').value.trim();
+                if (!input) return;
+
+                let url;
+                if (this.isUrl(input)) {
+                    url = this.formatUrl(input);
+                } else {
+                    // Search with Google
+                    url = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+                }
+
+                this.loadUrl(url);
+            }
+
+            quickAccess(url) {
+                this.loadUrl(url);
+            }
+
+            loadUrl(url) {
+                if (!url) return;
+
+                this.showBrowser();
+                this.showLoading();
+                this.startTime = Date.now();
+                
+                this.currentUrl = url;
+                document.getElementById('addressBar').value = url;
+                document.getElementById('statusText').textContent = `Loading ${this.getDomain(url)}...`;
+                document.getElementById('connectionStatus').textContent = '🟡 Loading';
+                document.getElementById('loadingUrl').textContent = url;
+
+                // Create proxy URL
+                const proxyUrl = this.createProxyUrl(url);
+                
+                // Load in frame
+                const frame = document.getElementById('proxyFrame');
+                frame.src = proxyUrl;
+
+                // Add to history
+                this.addToHistory(url);
+            }
+
+            createProxyUrl(url) {
+                // Use different proxy strategies
+                if (url.includes('github.com')) {
+                    return `/gh${url.split('github.com')[1]}`;
+                } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                    return `/yt${url.split('youtube.com')[1] || url.split('youtu.be')[1]}`;
+                } else {
+                    return `/proxy/${encodeURIComponent(url)}`;
+                }
+            }
+
+            showLoading() {
+                this.isLoading = true;
+                document.getElementById('loadingScreen').style.display = 'flex';
+                document.getElementById('proxyFrame').classList.remove('active');
+            }
+
+            hideLoading() {
+                this.isLoading = false;
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('proxyFrame').classList.add('active');
+                
+                const loadTime = Date.now() - this.startTime;
+                document.getElementById('loadTime').textContent = `${loadTime}ms`;
+                document.getElementById('statusText').textContent = 'Loaded';
+                document.getElementById('connectionStatus').textContent = '🟢 Connected';
+            }
+
+            handleFrameLoad() {
+                this.hideLoading();
+                this.updateNavigationButtons();
+            }
+
+            handleFrameError() {
+                this.hideLoading();
+                document.getElementById('statusText').textContent = 'Error loading page';
+                document.getElementById('connectionStatus').textContent = '🔴 Error';
+            }
+
+            showBrowser() {
+                document.getElementById('browserWindow').classList.add('active');
+            }
+
+            closeBrowser() {
+                document.getElementById('browserWindow').classList.remove('active');
+                document.getElementById('proxyFrame').src = '';
+                this.currentUrl = '';
+                document.getElementById('addressBar').value = '';
+                document.getElementById('statusText').textContent = 'Ready';
+                document.getElementById('loadTime').textContent = '--';
+                document.getElementById('connectionStatus').textContent = '🟢 Connected';
+            }
+
+            goBack() {
+                if (this.historyIndex > 0) {
+                    this.historyIndex--;
+                    this.loadUrl(this.history[this.historyIndex]);
+                }
+            }
+
+            goForward() {
+                if (this.historyIndex < this.history.length - 1) {
+                    this.historyIndex++;
+                    this.loadUrl(this.history[this.historyIndex]);
+                }
+            }
+
+            reloadPage() {
+                if (this.currentUrl) {
+                    this.loadUrl(this.currentUrl);
+                }
+            }
+
+            addToHistory(url) {
+                // Remove forward history
+                this.history = this.history.slice(0, this.historyIndex + 1);
+                this.history.push(url);
+                this.historyIndex = this.history.length - 1;
+                this.updateNavigationButtons();
+            }
+
+            updateNavigationButtons() {
+                document.getElementById('backBtn').disabled = this.historyIndex <= 0;
+                document.getElementById('forwardBtn').disabled = this.historyIndex >= this.history.length - 1;
+            }
+
+            toggleBookmark() {
+                if (!this.currentUrl) return;
+                
+                let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+                const index = bookmarks.indexOf(this.currentUrl);
+                
+                if (index === -1) {
+                    bookmarks.push(this.currentUrl);
+                    this.showNotification('Bookmark added!', 'success');
+                } else {
+                    bookmarks.splice(index, 1);
+                    this.showNotification('Bookmark removed!', 'info');
+                }
+                
+                localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+                this.updateBookmarkButton();
+            }
+
+            updateBookmarkButton() {
+                if (!this.currentUrl) return;
+                
+                const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+                const btn = document.querySelector('.browser-btn[onclick="toggleBookmark()"]');
+                
+                if (bookmarks.includes(this.currentUrl)) {
+                    btn.style.color = '#FFD700';
+                } else {
+                    btn.style.color = '';
+                }
+            }
+
+            // Utility functions
+            isUrl(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch {
+                    return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(string);
+                }
+            }
+
+            formatUrl(url) {
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    return 'https://' + url;
+                }
+                return url;
+            }
+
+            getDomain(url) {
+                try {
+                    return new URL(url).hostname;
+                } catch {
+                    return url;
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    color: white;
+                    font-weight: 600;
+                    z-index: 1000;
+                    transform: translateX(100%);
+                    transition: transform 0.3s ease;
+                    background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#F44336' : '#FF6B6B'};
+                `;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 100);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+
+            loadFromStorage() {
+                // Load bookmarks
+                this.updateBookmarkButton();
+                
+                // Load theme preference
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                if (savedTheme === 'light') {
+                    document.body.style.background = '#f5f5f5';
+                    document.body.style.color = '#333';
+                }
+            }
+
+            toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Global functions
+        function handleProxy() {
+            window.acheronPhaser.handleProxy();
+        }
+
+        function quickAccess(url) {
+            window.acheronPhaser.quickAccess(url);
+        }
+
+        function showBrowser() {
+            window.acheronPhaser.showBrowser();
+        }
+
+        function closeBrowser() {
+            window.acheronPhaser.closeBrowser();
+        }
+
+        function goBack() {
+            window.acheronPhaser.goBack();
+        }
+
+        function goForward() {
+            window.acheronPhaser.goForward();
+        }
+
+        function reloadPage() {
+            window.acheronPhaser.reloadPage();
+        }
+
+        function toggleBookmark() {
+            window.acheronPhaser.toggleBookmark();
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.style.background;
+            if (currentTheme === 'rgb(245, 245, 245)' || currentTheme.includes('f5f5f5')) {
+                body.style.background = '';
+                body.style.color = '';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.style.background = '#f5f5f5';
+                body.style.color = '#333';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        function toggleFullscreen() {
+            window.acheronPhaser.toggleFullscreen();
+        }
+
+        function showSettings() {
+            alert('Settings panel coming soon!\n\nFeatures:\n- Theme selection\n- Search engine preferences\n- Proxy settings\n- Bookmark management');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            window.acheronPhaser = new AcheronPhaser();
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
+                const CACHE_NAME = 'acheron-phaser-v1';
+                const urlsToCache = ['/'];
+
+                self.addEventListener('install', event => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME)
+                            .then(cache => cache.addAll(urlsToCache))
+                    );
+                });
+
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then(response => response || fetch(event.request))
+                    );
+                });
+            `)).then(registration => {
+                console.log('ServiceWorker registered');
+            }).catch(error => {
+                console.log('ServiceWorker registration failed');
+            });
+        }
+    </script>
 </body>
 </html>
