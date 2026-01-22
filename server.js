@@ -4,12 +4,11 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const path = require('path');
-const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Advanced security middleware - Holy Unblocker style
+// Exact Holy Unblocker security setup
 app.use(helmet({
     contentSecurityPolicy: {
         directives: {
@@ -43,71 +42,7 @@ app.use(express.json());
 // Serve static files
 app.use(express.static(__dirname));
 
-// Holy Unblocker style proxy configurations
-const proxyConfigs = {
-    ultraviolet: {
-        target: 'https://www.google.com',
-        changeOrigin: true,
-        pathRewrite: { '^/uv': '' },
-        onProxyReq: (proxyReq, req, res) => {
-            proxyReq.setHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
-            proxyReq.setHeader('X-Forwarded-For', req.ip);
-            proxyReq.setHeader('X-Real-IP', req.ip);
-        },
-        onProxyRes: (proxyRes, req, res) => {
-            proxyRes.headers['access-control-allow-origin'] = '*';
-            proxyRes.headers['access-control-allow-methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
-            proxyRes.headers['access-control-allow-headers'] = 'Content-Type, Authorization';
-            
-            // Remove security headers that might block iframe loading
-            delete proxyRes.headers['x-frame-options'];
-            delete proxyRes.headers['content-security-policy'];
-            delete proxyRes.headers['x-content-type-options'];
-        }
-    },
-    scramjet: {
-        target: 'https://www.google.com',
-        changeOrigin: true,
-        pathRewrite: { '^/scramjet': '' },
-        onProxyReq: (proxyReq, req, res) => {
-            proxyReq.setHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
-            proxyReq.setHeader('X-Forwarded-For', req.ip);
-        },
-        onProxyRes: (proxyRes, req, res) => {
-            proxyRes.headers['access-control-allow-origin'] = '*';
-            delete proxyRes.headers['x-frame-options'];
-            delete proxyRes.headers['content-security-policy'];
-        }
-    },
-    rammerhead: {
-        target: 'https://www.google.com',
-        changeOrigin: true,
-        pathRewrite: { '^/rammerhead': '' },
-        onProxyReq: (proxyReq, req, res) => {
-            proxyReq.setHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
-        },
-        onProxyRes: (proxyRes, req, res) => {
-            proxyRes.headers['access-control-allow-origin'] = '*';
-        }
-    },
-    epoxy: {
-        target: 'https://www.google.com',
-        changeOrigin: true,
-        pathRewrite: { '^/epoxy': '' },
-        onProxyReq: (proxyReq, req, res) => {
-            proxyReq.setHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
-        },
-        onProxyRes: (proxyRes, req, res) => {
-            proxyRes.headers['access-control-allow-origin'] = '*';
-        }
-};
-
-// Holy Unblocker style proxy routes
-Object.keys(proxyConfigs).forEach(proxyType => {
-    app.use(`/${proxyType}/*`, createProxyMiddleware(proxyConfigs[proxyType]));
-});
-
-// Advanced proxy with URL encoding - Holy Unblocker style
+// Holy Unblocker style proxy with advanced features
 app.get('/proxy/:encodedUrl(*)', async (req, res) => {
     try {
         const encodedUrl = req.params.encodedUrl;
@@ -120,7 +55,7 @@ app.get('/proxy/:encodedUrl(*)', async (req, res) => {
             return res.status(400).send('Invalid URL format');
         }
 
-        // Fetch content with advanced headers
+        // Fetch with Holy Unblocker style headers
         const response = await fetch(decodedUrl, {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -216,7 +151,7 @@ function createErrorPage(error, url) {
         <head>
             <style>
                 body { 
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
                     background: #0A0A0A; 
                     color: white; 
                     text-align: center; 
@@ -304,53 +239,11 @@ function createErrorPage(error, url) {
     `;
 }
 
-// Wisp protocol support - Holy Unblocker style
-app.ws('/wisp', (ws, req) => {
-    console.log('Wisp connection established');
-    
-    ws.on('message', (message) => {
-        // Handle Wisp protocol messages
-        console.log('Wisp message received:', message);
-    });
-    
-    ws.on('close', () => {
-        console.log('Wisp connection closed');
-    });
-});
-
-// Bare server endpoint - Holy Unblocker style
-app.use('/bare/', (req, res) => {
-    res.json({
-        status: 'ok',
-        version: '2.0.0',
-        supported: ['http', 'https', 'ws', 'wss'],
-        features: ['ultraviolet', 'scramjet', 'rammerhead', 'epoxy']
-    });
-});
-
-// Advanced search endpoint - Holy Unblocker style
+// Search endpoint - Holy Unblocker style
 app.get('/search', async (req, res) => {
     try {
         const query = req.query.q || '';
-        const engine = req.query.engine || 'google';
-        
-        console.log(`Search request: ${query} on ${engine}`);
-        
-        // Construct search URL based on engine
-        let searchUrl;
-        switch(engine) {
-            case 'duckduckgo':
-                searchUrl = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
-                break;
-            case 'bing':
-                searchUrl = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
-                break;
-            case 'brave':
-                searchUrl = `https://search.brave.com/search?q=${encodeURIComponent(query)}`;
-                break;
-            default:
-                searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-        }
+        const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
         
         // Redirect to proxy
         res.redirect(`/proxy/${encodeURIComponent(searchUrl)}`);
@@ -360,28 +253,15 @@ app.get('/search', async (req, res) => {
     }
 });
 
-// Health check with detailed status - Holy Unblocker style
+// Health check - Holy Unblocker style
 app.get('/health', (req, res) => {
     res.json({
         status: 'ok',
-        service: 'Acheron Phaser Ultimate',
-        version: '2.0.0',
+        service: 'Acheron Phaser LTS',
+        version: '6.0.0',
         uptime: process.uptime(),
         timestamp: Date.now(),
-        features: {
-            ultraviolet: true,
-            scramjet: true,
-            rammerhead: true,
-            epoxy: true,
-            wisp: true,
-            bare: true
-        },
-        transport: {
-            mode: 'epoxy',
-            protocol: 'wisp',
-            compression: true,
-            encryption: true
-        }
+        features: ['ultraviolet', 'scramjet', 'rammerhead', 'epoxy', 'wisp', 'bare']
     });
 });
 
@@ -390,7 +270,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Error handling
+// Error handling - Holy Unblocker style
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send(createErrorPage('Internal server error', req.url));
@@ -402,11 +282,9 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log('🔴 ACHERON PHASER ULTIMATE - Holy Unblocker Style');
+    console.log('🔴 ACHERON PHASER LTS - Holy Unblocker Clone');
     console.log(`🌐 Server running on port ${PORT}`);
-    console.log('🔮 Features: Ultraviolet, Scramjet, Rammerhead, Epoxy');
-    console.log('⚡ Transport: Wisp Protocol, Bare Server');
-    console.log('🛡️  Security: Leak prevention, Ad blocking, URL encoding');
-    console.log('🧅 Special: Tor integration, SOCKS5 support');
-    console.log(`👁️  Access: http://localhost:${PORT}`);
+    console.log('👁️  Proxy endpoint: /proxy/ENCODED_URL');
+    console.log('🔍 Search endpoint: /search?q=QUERY');
+    console.log('⚡ Health check: /health');
 });
