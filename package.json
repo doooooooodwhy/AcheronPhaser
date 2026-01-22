@@ -1,0 +1,64 @@
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Security middleware
+app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false
+}));
+app.use(compression());
+app.use(cors());
+app.use(express.json());
+
+// Serve static files (just index.html)
+app.use(express.static(__dirname));
+
+// Proxy middleware for different sites
+const createProxy = (target, pathRewrite = {}) => {
+    return createProxyMiddleware({
+        target,
+        changeOrigin: true,
+        pathRewrite,
+        onProxyReq: (proxyReq, req, res) => {
+            proxyReq.setHeader('User-Agent', 'Acheron-Phaser/1.0');
+        },
+        onError: (err, req, res) => {
+            res.status(500).json({ error: 'Proxy error', message: err.message });
+        }
+    });
+};
+
+// Proxy routes
+app.use('/gh', createProxy('https://github.com', { '^/gh': '' }));
+app.use('/yt', createProxy('https://www.youtube.com', { '^/yt': '' }));
+app.use('/proxy/:url(*)', (req, res, next) => {
+    try {
+        const targetUrl = decodeURIComponent(req.params.url);
+        const proxy = createProxy(targetUrl);
+        proxy(req, res, next);
+    } catch (error) {
+        res.status(400).json({ error: 'Invalid URL' });
+    }
+});
+
+// Main route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Health check
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', service: 'Acheron Phaser', version: '1.0.0' });
+});
+
+app.listen(PORT, () => {
+    console.log(`🚀 Acheron Phaser running on port ${PORT}`);
+    console.log(`🌐 Access: http://localhost:${PORT}`);
+});
