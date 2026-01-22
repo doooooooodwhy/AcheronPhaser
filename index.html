@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acheron Phaser 2.0 - Advanced Browser Proxy</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔴</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>🔴 Acheron Phaser 2.0</h1>
+                <p>Advanced Browser Proxy</p>
+            </div>
+            <div class="header-controls">
+                <button id="themeToggle" class="btn-icon">🌙</button>
+                <button id="fullscreenToggle" class="btn-icon">⛶</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <select id="searchEngine" class="search-dropdown">
+                        <option value="google">🔍 Google</option>
+                        <option value="duckduckgo">🦆 DuckDuckGo</option>
+                        <option value="bing">🅱️ Bing</option>
+                        <option value="yahoo">🌐 Yahoo</option>
+                        <option value="brave">🦁 Brave</option>
+                        <option value="ecosia">🌳 Ecosia</option>
+                    </select>
+                    <div class="search-input-group">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Search the web or enter URL..."
+                            class="search-input"
+                        >
+                        <button id="searchButton" class="btn-search">🚀</button>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="btn-quick" data-url="https://github.com">🐙 GitHub</button>
+                    <button class="btn-quick" data-url="https://youtube.com">📺 YouTube</button>
+                    <button class="btn-quick" data-url="https://reddit.com">🤖 Reddit</button>
+                    <button class="btn-quick" data-url="https://discord.com">💬 Discord</button>
+                    <button class="btn-quick" data-url="https://twitter.com">🐦 Twitter</button>
+                </div>
+            </section>
+
+            <!-- Browser Window -->
+            <section class="browser-section">
+                <div class="browser-window">
+                    <!-- Browser Controls -->
+                    <div class="browser-controls">
+                        <div class="browser-nav">
+                            <button id="backButton" class="btn-nav" disabled>←</button>
+                            <button id="forwardButton" class="btn-nav" disabled>→</button>
+                            <button id="reloadButton" class="btn-nav">🔄</button>
+                            <button id="homeButton" class="btn-nav">🏠</button>
+                        </div>
+                        <div class="browser-address">
+                            <div class="address-bar">
+                                <span id="sslIcon">🔒</span>
+                                <input type="text" id="addressInput" placeholder="Enter URL...">
+                                <button id="goAddressButton" class="btn-go">→</button>
+                            </div>
+                        </div>
+                        <div class="browser-actions">
+                            <button id="bookmarkButton" class="btn-action">⭐</button>
+                            <button id="menuButton" class="btn-action">☰</button>
+                        </div>
+                    </div>
+
+                    <!-- Loading Bar -->
+                    <div class="loading-bar" id="loadingBar">
+                        <div class="loading-progress"></div>
+                    </div>
+
+                    <!-- Browser Content -->
+                    <div class="browser-content">
+                        <iframe 
+                            id="browserFrame" 
+                            src="about:blank" 
+                            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                            allowfullscreen
+                        ></iframe>
+                        
+                        <!-- Welcome Screen -->
+                        <div id="welcomeScreen" class="welcome-screen">
+                            <div class="welcome-content">
+                                <h2>Welcome to Acheron Phaser 2.0</h2>
+                                <p>Your secure, private browser proxy</p>
+                                <div class="welcome-features">
+                                    <div class="feature">
+                                        <span class="feature-icon">🔒</span>
+                                        <span>Secure Browsing</span>
+                                    </div>
+                                    <div class="feature">
+                                        <span class="feature-icon">⚡</span>
+                                        <span>Fast Loading</span>
+                                    </div>
+                                    <div class="feature">
+                                        <span class="feature-icon">🎨</span>
+                                        <span>Custom Themes</span>
+                                    </div>
+                                </div>
+                                <div class="welcome-tips">
+                                    <p>💡 <strong>Tips:</strong></p>
+                                    <ul>
+                                        <li>Use the search bar to search or enter URLs</li>
+                                        <li>Switch search engines with the dropdown</li>
+                                        <li>Press F11 for fullscreen mode</li>
+                                        <li>Ctrl+L to focus address bar</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error Screen -->
+                        <div id="errorScreen" class="error-screen" style="display: none;">
+                            <div class="error-content">
+                                <div class="error-icon">❌</div>
+                                <h3 id="errorTitle">Connection Error</h3>
+                                <p id="errorMessage">Unable to load this page</p>
+                                <button id="retryButton" class="btn-retry">Try Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span id="statusText">Ready</span>
+            </div>
+            <div class="status-right">
+                <span id="loadTime">--</span>
+                <span id="connectionStatus">🟢 Connected</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Context Menu -->
+    <div id="contextMenu" class="context-menu" style="display: none;">
+        <div class="context-item" data-action="back">← Back</div>
+        <div class="context-item" data-action="forward">→ Forward</div>
+        <div class="context-item" data-action="reload">🔄 Reload</div>
+        <hr>
+        <div class="context-item" data-action="bookmark">⭐ Bookmark</div>
+        <div class="context-item" data-action="fullscreen">⛶ Fullscreen</div>
+    </div>
+
+    <script src="static/js/search.js"></script>
+    <script src="static/js/browser.js"></script>
+    <script src="static/js/main.js"></script>
+</body>
+</html>
