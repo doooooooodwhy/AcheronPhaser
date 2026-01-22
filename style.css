@@ -1,0 +1,10 @@
+/* Pastel Deep Red & Grey Theme */
+:root {
+  --primary-red: #FF746C;        /* Pastel red */
+  --deep-red: #E5554D;           /* Deeper red */
+  --light-red: #FFA59F;          /* Light pastel red */
+  --primary-grey: #6B7280;       /* Main grey */
+  --dark-grey: #4B5563;          /* Dark grey */
+  --light-grey: #F3F4F6;         /* Light grey */
+  --bg-gradient: linear-gradient(135deg, #FF746C 0%, #6B7280 100%);
+}
