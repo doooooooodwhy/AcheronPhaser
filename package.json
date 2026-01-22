@@ -1,7 +1,7 @@
 {
-  "name": "acheron-phaser-anonymous-view",
+  "name": "acheron-phaser-fixed",
   "version": "2.0.0",
-  "description": "Anonymous view proxy with Startpage-style server-side fetching",
+  "description": "Fixed proxy with proper URL decoding like the example",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,13 +10,11 @@
   "dependencies": {
     "express": "^4.18.2",
     "node-fetch": "^2.6.7",
-    "jsdom": "^22.1.0",
-    "http-proxy-middleware": "^2.0.6",
     "cors": "^2.8.5",
     "helmet": "^7.0.0",
     "compression": "^1.7.4"
   },
-  "keywords": ["proxy", "anonymous-view", "startpage", "school-safe", "acheron"],
+  "keywords": ["proxy", "anonymous-view", "school-safe", "url-decoding"],
   "author": "Acheron Phaser",
   "license": "MIT"
 }
