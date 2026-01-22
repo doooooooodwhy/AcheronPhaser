@@ -1,39 +1,35 @@
 {
-  "name": "acheron-phaser-ultimate",
-  "version": "2.0.0",
-  "description": "Ultimate Holy Unblocker style proxy with full feature set",
+  "name": "acheron-phaser-lts",
+  "version": "6.0.0",
+  "description": "Acheron Phaser LTS - Holy Unblocker style web proxy",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "fresh-start": "npm install && npm start",
+    "restart": "npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "express-ws": "^5.0.2",
     "node-fetch": "^2.6.7",
     "cors": "^2.8.5",
     "helmet": "^7.0.0",
-    "compression": "^1.7.4",
-    "http-proxy-middleware": "^2.0.6",
-    "ws": "^8.13.0"
+    "compression": "^1.7.4"
   },
   "keywords": [
     "proxy",
     "holy-unblocker",
-    "ultraviolet",
-    "scramjet",
-    "rammerhead",
-    "epoxy",
-    "wisp",
-    "bare-server",
-    "advanced-proxy",
-    "school-safe",
-    "anonymous-browsing"
+    "web-proxy",
+    "censorship-bypass",
+    "school-proxy",
+    "acheron",
+    "phaser",
+    "lts"
   ],
-  "author": "Acheron Phaser Ultimate Team",
+  "author": "Acheron Phaser LTS Team",
   "license": "MIT",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   }
 }
