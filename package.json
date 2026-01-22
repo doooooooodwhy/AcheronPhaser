@@ -1,0 +1,33 @@
+{
+  "name": "acheron-phaser-v2",
+  "version": "2.0.0",
+  "description": "Advanced browser proxy with integrated search and browser window",
+  "main": "src/server/index.js",
+  "scripts": {
+    "start": "node src/server/index.js",
+    "dev": "nodemon src/server/index.js",
+    "build": "npm run build:client",
+    "build:client": "webpack --mode production",
+    "deploy": "npm run build && vercel --prod",
+    "docker:build": "docker build -t acheron-phaser-v2 .",
+    "docker:run": "docker run -p 3000:3000 acheron-phaser-v2"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "compression": "^1.7.4",
+    "express-rate-limit": "^6.7.1",
+    "dotenv": "^16.3.1",
+    "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "keywords": ["proxy", "browser", "search", "github", "acheron", "phaser", "privacy"],
+  "author": "Acheron Phaser Team",
+  "license": "MIT"
+}
